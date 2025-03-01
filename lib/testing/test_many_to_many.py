@@ -1,6 +1,13 @@
 from many_to_many import Author, Book, Contract
 import pytest
 
+# Fixture to reset class variables before each test
+@pytest.fixture(autouse=True)
+def reset_globals():
+    Author.all_authors = []
+    Book.all_books = []
+    Contract.all_contracts = []
+
 def test_book_init():
     """Test Book class initializes with title"""
     book = Book("Title")
@@ -120,7 +127,7 @@ def test_author_has_total_royalties():
 
 def test_contract_contracts_by_date():
     """Test Contract class has method contracts_by_date() that sorts all contracts by date"""
-    Contract.all = []
+    Contract.all_contracts = []  
     author1 = Author("Name 1")
     book1 = Book("Title 1")
     book2 = Book("Title 2")
